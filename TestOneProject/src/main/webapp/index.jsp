@@ -1,193 +1,147 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home | Order Management</title>
-
+    <title>Home - EazyDeals</title>
+    
     <!-- Bootstrap & FontAwesome -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
     <style>
         body {
-            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ff7eb3, #ff758c, #ff9770);
+            font-family: 'Poppins', sans-serif;
+            color: black;
         }
-
-        /* Sticky Navbar */
-        .navbar {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            background: #333;
-        }
-
-        .navbar .nav-link {
-            color: white;
-        }
-
-        .navbar .nav-link:hover {
-            color: #f8d210;
-        }
-
-        .dropdown-menu {
-            min-width: 200px;
-        }
-
-        .search-bar {
-            width: 300px;
-        }
-
-        /* Carousel */
-        .carousel-item img {
-            height: 400px;
-            object-fit: cover;
-        }
-
-        /* Product Cards */
-        .product-card {
-            border-radius: 10px;
-            overflow: hidden;
-            transition: transform 0.3s;
-        }
-
-        .product-card:hover {
-            transform: scale(1.05);
-        }
-
-        .card img {
-            height: 200px;
-            object-fit: cover;
-        }
-
-        /* Footer */
-        .footer {
-            background: #222;
-            color: white;
-            padding: 20px;
+        .navbar { background-color: #ff4d6d; }
+        .navbar-brand, .nav-link, .dropdown-item { color: black !important; }
+        .search-bar { width: 300px; }
+        .category-section {
+            background-color: #e3f2fd;
+            padding: 10px 0;
             text-align: center;
         }
-
-        .footer a {
-            color: white;
-            margin: 0 10px;
+        .category-section img {
+            width: 80px;
+            height: 80px;
         }
-
-        .scroll-up {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #f8d210;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 50%;
-            cursor: pointer;
-        }
+        .carousel-item img { height: 350px; object-fit: cover; }
+        .featured-product { transition: transform 0.3s ease-in-out; }
+        .featured-product:hover { transform: scale(1.05); }
+        .featured-product img { height: 200px; object-fit: cover; }
+        .footer { background-color: #222; color: white; text-align: center; padding: 3px; font-size: 0.7em; margin-top: 15px; }
     </style>
 </head>
 <body>
 
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container">
-            <a class="navbar-brand" href="index.jsp">Order Management</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.jsp">Home</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            Product Details
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="products.jsp?category=electronics">Electric Appliances</a></li>
-                            <li><a class="dropdown-item" href="products.jsp?category=clothing">Clothing</a></li>
-                            <li><a class="dropdown-item" href="products.jsp?category=footwear">Footwear</a></li>
-                            <li><a class="dropdown-item" href="products.jsp?category=skincare">Skin-care Products</a></li>
-                            <li><a class="dropdown-item" href="products.jsp?category=homedecor">Home Decor</a></li>
-                            <li><a class="dropdown-item" href="products.jsp?category=goodies">Goodies</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="about.jsp">About Us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contact.jsp">Contact Us</a>
-                    </li>
-                </ul>
-
-                <!-- Search Bar -->
-                <input class="form-control me-2 search-bar" type="search" placeholder="Search..." id="searchInput">
-                
-                <!-- Logout Button -->
-                <c:if test="${not empty sessionScope.user}">
-                    <a href="logout.jsp" class="btn btn-danger">Logout</a>
-                </c:if>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Carousel -->
-    <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="product1.jpg" class="d-block w-100" alt="Product 1">
-            </div>
-            <div class="carousel-item">
-                <img src="product2.jpg" class="d-block w-100" alt="Product 2">
-            </div>
-            <div class="carousel-item">
-                <img src="product3.jpg" class="d-block w-100" alt="Product 3">
-            </div>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="#">EazyDeals</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item"><a class="nav-link" href="#">Products</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="categoryDropdown" role="button" data-bs-toggle="dropdown">Category</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Mobiles</a></li>
+                        <li><a class="dropdown-item" href="#">Laptops</a></li>
+                        <li><a class="dropdown-item" href="#">Appliances</a></li>
+                        <li><a class="dropdown-item" href="#">Books</a></li>
+                        <li><a class="dropdown-item" href="#">Furniture</a></li>
+                        <li><a class="dropdown-item" href="#">Clothes</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <form class="d-flex">
+                <input class="form-control me-2 search-bar" type="search" placeholder="Search for products">
+                <button class="btn btn-light" type="submit">Search</button>
+            </form>
+            <a class="btn btn-light ms-3" href="signup.jsp">Register</a>
+            <a class="btn btn-light ms-2" href="login.jsp">Login</a>
+            <a class="btn btn-light ms-2" href="#">Admin</a>
         </div>
     </div>
+</nav>
 
-    <!-- Product Section -->
-    <div class="container mt-5">
-        <h2>Featured Products</h2>
-        <div class="row">
-            <c:forEach var="product" items="${featuredProducts}">
-                <div class="col-md-4">
-                    <div class="card product-card">
-                        <img src="${product.image}" class="card-img-top" alt="${product.name}">
-                        <div class="card-body text-center">
-                            <h5>$${product.price}</h5>
-                            <p>⭐ ${product.rating}</p>
-                            <button class="btn btn-primary">Add to Cart</button>
-                            <button class="btn btn-outline-danger">Wishlist</button>
-                            <button class="btn btn-success">Buy</button>
-                        </div>
-                    </div>
-                </div>
-            </c:forEach>
+<!-- Category Section -->
+<div class="category-section">
+    <div class="container d-flex justify-content-around">
+        <div><img src="img/mobiles.png" alt="Mobiles"><p>Mobiles</p></div>
+        <div><img src="img/laptops.png" alt="Laptops"><p>Laptops</p></div>
+        <div><img src="img/appliances.png" alt="Appliances"><p>Appliances</p></div>
+        <div><img src="img/books.png" alt="Books"><p>Books</p></div>
+        <div><img src="img/furniture.png" alt="Furniture"><p>Furniture</p></div>
+        <div><img src="img/clothes.png" alt="Clothes"><p>Clothes</p></div>
+        <div><img src="img/electronics.png" alt="Electronics"><p>Electronics</p></div>
+    </div>
+</div>
+
+<!-- Carousel -->
+<div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="img/banner1.jpg" class="d-block w-100" alt="Banner 1">
+        </div>
+        <div class="carousel-item">
+            <img src="img/banner2.jpg" class="d-block w-100" alt="Banner 2">
         </div>
     </div>
-
-    <!-- Footer -->
-    <div class="footer">
-        <p>Follow us: 
-            <a href="#"><i class="fab fa-facebook"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-        </p>
-        <p>Contact: support@ordermanagement.com</p>
-        <p>© 2025 Order Management. All rights reserved.</p>
-    </div>
-
-    <!-- Scroll Up Button -->
-    <button class="scroll-up" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
-        <i class="fa fa-arrow-up"></i>
+    <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
     </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </button>
+</div>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Latest Products -->
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Latest Products</h2>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card featured-product">
+                <img src="img/earbuds.jpg" class="card-img-top" alt="Earbuds">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Wireless Earbuds</h5>
+                    <button class="btn btn-primary">View</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card featured-product">
+                <img src="img/hoodie.jpg" class="card-img-top" alt="Hoodie">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Black Hoodie</h5>
+                    <button class="btn btn-primary">View</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card featured-product">
+                <img src="img/laptop.jpg" class="card-img-top" alt="Gaming Laptop">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Gaming Laptop</h5>
+                    <button class="btn btn-primary">View</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+    <p>Follow us:</p>
+    <p>Contact: support@eazydeals.com</p>
+    <p>&copy; 2025 EazyDeals. All rights reserved.</p>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
