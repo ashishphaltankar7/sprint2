@@ -41,7 +41,6 @@
             border-color: rgba(255, 255, 255, 0.8);
         }
 
-        /* Make View Password Button Visible */
         .toggle-password {
             background: none;
             border: none;
@@ -50,9 +49,9 @@
             right: 15px;
             top: 50%;
             transform: translateY(-50%);
-            color: black; /* Ensure it is clearly visible */
-            font-size: 1.8em; /* Increase button size */
-            visibility: visible; /* Always visible */
+            color: black;
+            font-size: 1.8em;
+            visibility: visible;
         }
 
         .btn-custom {
@@ -99,6 +98,27 @@
                 <input type="text" class="form-control" id="pincode" name="pincode" placeholder="Pincode" required>
             </div>
 
+            <!-- State Selection -->
+            <div class="mb-3">
+                <select class="form-control" id="state" name="state" required>
+                    <option value="" disabled selected>Select State</option>
+                    <option value="Maharashtra">Maharashtra</option>
+                    <option value="Karnataka">Karnataka</option>
+                    <option value="Tamil Nadu">Tamil Nadu</option>
+                    <option value="Delhi">Delhi</option>
+                    <option value="Uttar Pradesh">Uttar Pradesh</option>
+                    <option value="Gujarat">Gujarat</option>
+                    <option value="West Bengal">West Bengal</option>
+                </select>
+            </div>
+
+            <!-- City Selection -->
+            <div class="mb-3">
+                <select class="form-control" id="city" name="city" required>
+                    <option value="" disabled selected>Select City</option>
+                </select>
+            </div>
+
             <div class="mb-3">
                 <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
             </div>
@@ -126,6 +146,8 @@
             let phoneInput = document.getElementById("phone");
             let addressInput = document.getElementById("address");
             let pincodeInput = document.getElementById("pincode");
+            let stateInput = document.getElementById("state");
+            let cityInput = document.getElementById("city");
             let passwordInput = document.getElementById("password");
             let confirmPasswordInput = document.getElementById("confirmPassword");
             let signupBtn = document.getElementById("signupBtn");
@@ -138,6 +160,8 @@
                     phoneInput.value.trim() !== "" &&
                     addressInput.value.trim() !== "" &&
                     pincodeInput.value.trim() !== "" &&
+                    stateInput.value.trim() !== "" &&
+                    cityInput.value.trim() !== "" &&
                     passwordInput.value.trim() !== "" &&
                     confirmPasswordInput.value.trim() !== "" &&
                     passwordInput.value === confirmPasswordInput.value;
@@ -172,13 +196,29 @@
                 }
             }
 
-            nameInput.addEventListener("input", validateForm);
-            emailInput.addEventListener("input", validateForm);
-            phoneInput.addEventListener("input", validateForm);
-            addressInput.addEventListener("input", validateForm);
-            pincodeInput.addEventListener("input", validateForm);
-            passwordInput.addEventListener("input", validateForm);
-            confirmPasswordInput.addEventListener("input", validateForm);
+            stateInput.addEventListener("change", function() {
+                let state = stateInput.value;
+                let cities = {
+                    "Maharashtra": ["Mumbai", "Pune", "Nagpur"],
+                    "Karnataka": ["Bangalore", "Mysore"],
+                    "Tamil Nadu": ["Chennai", "Coimbatore"],
+                    "Delhi": ["New Delhi"],
+                    "Uttar Pradesh": ["Lucknow", "Noida"],
+                    "Gujarat": ["Ahmedabad", "Surat"],
+                    "West Bengal": ["Kolkata"]
+                };
+                cityInput.innerHTML = '<option value="" disabled selected>Select City</option>';
+                cities[state].forEach(city => {
+                    let option = document.createElement("option");
+                    option.value = city;
+                    option.textContent = city;
+                    cityInput.appendChild(option);
+                });
+            });
+
+            [nameInput, emailInput, phoneInput, addressInput, pincodeInput, stateInput, cityInput, passwordInput, confirmPasswordInput].forEach(input => {
+                input.addEventListener("input", validateForm);
+            });
         });
     </script>
 
